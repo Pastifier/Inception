@@ -1,15 +1,13 @@
-FROM alpine:3.21
+FROM alpine:3.20
 
-RUN apk -U upgrade && \
-    apk add mariadb mariadb-client && \
-    mkdir -p /var/lib/mysql /run/mysqld && \
-    chown -R mysql:mysql /var/lib/mysql /run/mysqld
+RUN apk update
+RUN apk add mariadb mariadb-common mariadb-client openrc
 
+RUN openrc
+RUN touch /run/openrc/softlevel
 
-COPY docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
-
+ADD ./tools/run_mariadb.sh .
+RUN chmod +x /run_mariadb.sh
 EXPOSE 3306
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["mariadbd"]
+ENTRYPOINT [ "./run_mariadb.sh" ]

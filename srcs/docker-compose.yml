@@ -1,35 +1,84 @@
-version: "3.9"
-
-networks:
-  inception_net:
-    driver: bridge
-
+version: '3.8'
 services:
+
   mariadb:
-    build:
-      context: requirements/mariadb
-      dockerfile: Dockerfile
+    build: requirements/mariadb/
+    image: mariadb
+    container_name: mariadb
+    volumes:
+      - mariadb:/var/lib/mysql
     restart: always
+    networks:
+      - Inception
     env_file:
       - .env
-    networks:
-      - inception_net
-    volumes:
-      - mariadb_data:/var/lib/mysql
-    ports:
-      - "3306:3306"
+    secrets:
+      - db_root_password
+      - db_password
 
   wordpress:
-    image: wordpress:php8.2-fpm
-    restart: always
-    env_file:
-      - .env
+    build: requirements/wordpress/
+    image: wordpress
+    volumes:
+      - "wordpress:/var/www/html/wordpress"
+    container_name: wordpress
     depends_on:
       - mariadb
     networks:
-      - inception_net
+      - Inception
+    restart: always
+    env_file:
+      - .env
+    secrets:
+      - db_password
+      - credentials
+    healthcheck:
+      test: ["CMD", "php-fpm83", "-t"]
+      interval: 3s
+      timeout: 30s
+      retries: 3
+
+  nginx:
+    build: requirements/nginx/
+    image: nginx
+    container_name: nginx
+    volumes:
+      - "wordpress:/var/www/html/wordpress"
     ports:
-      - "8080:80"
+      - 443:443
+    depends_on:
+      - wordpress
+    networks:
+      - Inception
+    restart: always
+    env_file:
+      - .env
 
 volumes:
-  mariadb_data:
+  mariadb:
+    name: mariadb
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/pastifier/data/db-data
+  wordpress:
+    name: wordpress
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/pastifier/data/www-data
+
+networks:
+  Inception:
+    name: Inception
+    driver: bridge
+
+secrets:
+  db_root_password:
+    file: ../secrets/db_root_password.txt
+  db_password:
+    file: ../secrets/db_password.txt
+  credentials:
+    file: ../secrets/credentials.txt
