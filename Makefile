@@ -1,4 +1,3 @@
-
 all: volumes build up
 
 build:
@@ -48,20 +47,20 @@ cleanvolumes:
 	@read -p "Are you sure you want to remove all current directoires of volumes? (y/N): " confirm; \
 	if [ "$$confirm" = "y" ]; then \
 		echo "Removing all volumes"; \
-		rm -rf /home/pastifier/data/db-data; \
-		rm -rf /home/pastifier/data/www-data; \
+		rm -rf /home/ebinjama/data/db-data; \
+		rm -rf /home/ebinjama/data/www-data; \
 		echo "Volumes removed."; \
 	else \
 		echo "Operation canceled."; \
 	fi
 
 freshvolumes:
-	rm -rf /home/pastifier/data/db-data/*
-	rm -rf /home/pastifier/data/www-data/*
+	rm -rf /home/ebinjama/data/db-data/*
+	rm -rf /home/ebinjama/data/www-data/*
 
 volumes:
-	mkdir -p /home/pastifier/data/db-data
-	mkdir -p /home/pastifier/data/www-data
+	mkdir -p /home/ebinjama/data/db-data
+	mkdir -p /home/ebinjama/data/www-data
 
 ps:
 	docker compose -f ./srcs/docker-compose.yml ps

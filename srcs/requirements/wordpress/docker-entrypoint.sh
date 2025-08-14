@@ -1,7 +1,5 @@
 #!/bin/sh
 
-
-# Check if WordPress is installed, if not download it manually
 if [ ! -f /var/www/html/wordpress/wp-config-sample.php ]; then
     echo "WordPress not found, downloading..."
     mkdir -p /var/www/html/wordpress
@@ -18,7 +16,6 @@ sed -i 's|database_name_here|'${DATABASE_NAME}'|g' /var/www/html/wordpress/wp-co
 sed -i 's|username_here|'${DATABASE_USER}'|g' /var/www/html/wordpress/wp-config-sample.php
 sed -i 's|password_here|'${DATABASE_PASS}'|g' /var/www/html/wordpress/wp-config-sample.php
 sed -i 's|localhost|'${DATABASE_HOST}'|g' /var/www/html/wordpress/wp-config-sample.php
-
 
 chmod -R 755 /var/www/html/wordpress
 chown -R nobody:nobody /var/www/html/wordpress
@@ -37,4 +34,4 @@ wp --allow-root user create "$NORMAL_USER" "$NORMAL_USER_EMAIL" --role=subscribe
 
 sed -i 's|listen = 127.0.0.1:9000|listen = 0.0.0.0:9000|g' /etc/php83/php-fpm.d/www.conf
 
-/usr/sbin/php-fpm83 -FR
+exec /usr/sbin/php-fpm83 -FR

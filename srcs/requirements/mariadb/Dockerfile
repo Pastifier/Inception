@@ -1,13 +1,14 @@
-FROM alpine:3.20
+FROM alpine:3.21
 
-RUN apk update
-RUN apk add mariadb mariadb-common mariadb-client openrc
+RUN <<EOF
+apk update
+apk add mariadb mariadb-common mariadb-client openrc
+openrc
+touch /run/openrc/softlevel
+EOF
 
-RUN openrc
-RUN touch /run/openrc/softlevel
+COPY --chmod=755 ./docker-entrypoint.sh /docker-entrypoint.sh
 
-ADD ./tools/run_mariadb.sh .
-RUN chmod +x /run_mariadb.sh
 EXPOSE 3306
 
-ENTRYPOINT [ "./run_mariadb.sh" ]
+ENTRYPOINT [ "/docker-entrypoint.sh" ]
