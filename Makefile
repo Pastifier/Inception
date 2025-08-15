@@ -70,3 +70,5 @@ networks:
 
 vols:
 	docker volume ls
+
+re: fclean all
