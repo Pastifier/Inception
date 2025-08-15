@@ -36,7 +36,7 @@ fclean: clean
 	if [ "$$confirm" = "y" ]; then \
 		echo "Removing all data..."; \
 		docker system prune --all --force; \
-		docker volume rm $(docker volume ls -q); \
+		docker volume rm mariadb wordpress; \
 		echo "all docker data removed."; \
 	else \
 		echo "Operation canceled."; \
