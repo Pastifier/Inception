@@ -21,11 +21,15 @@ chmod -R 755 /var/www/html/wordpress
 chown -R nobody:nobody /var/www/html/wordpress
 cd /var/www/html/wordpress/
 # sleep 5
+
 # Wait for MariaDB to be ready
-until mysql -h"$DB_HOST" -u"$DB_USER" -p"$DB_PASSWORD" -e 'SELECT 1'; do
-  echo "Waiting for MariaDB..."
+echo "Waiting for MariaDB to accept connections..."
+until mariadb -h "$DB_HOST" -u "$DB_USER" --password="$DB_PASSWORD" -e "SELECT 1" >/dev/null 2>&1; do
+  echo "Still waiting for MariaDB..."
   sleep 4
 done
+echo "✅ Connected to MariaDB"
+
 if [ -f /var/www/html/wordpress/wp-config.php ]; then
     echo "WordPress already configured."
 else
