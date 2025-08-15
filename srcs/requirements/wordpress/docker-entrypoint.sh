@@ -22,7 +22,7 @@ chown -R nobody:nobody /var/www/html/wordpress
 cd /var/www/html/wordpress/
 # sleep 5
 # Wait for MariaDB to be ready
-until mysql -h"$WORDPRESS_DB_HOST" -u"$WORDPRESS_DB_USER" -p"$WORDPRESS_DB_PASSWORD" -e 'SELECT 1'; do
+until mysql -h"$DB_HOST" -u"$DB_USER" -p"$DB_PASSWORD" -e 'SELECT 1'; do
   echo "Waiting for MariaDB..."
   sleep 4
 done
