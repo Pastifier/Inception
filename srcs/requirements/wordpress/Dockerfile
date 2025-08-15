@@ -16,7 +16,7 @@ COPY --chmod=755 tools/wp-cli.phar /usr/local/bin/wp
 # copying the WordPress Command Line Interface (WP-CLI) tool into your container.
 
 
-RUN chmod +x /usr/local/bin/wp
+# RUN chmod +x /usr/local/bin/wp
 
 COPY conf/www.conf /etc/php83/php-fpm.d/www.conf
 
