@@ -1,25 +1,25 @@
 all: volumes build up
 
 build:
-	docker compose -f ./srcs/docker-compose.yml build
+	docker-compose -f ./srcs/docker-compose.yml build
 
 up:
-	docker compose -f ./srcs/docker-compose.yml up -d
+	docker-compose -f ./srcs/docker-compose.yml up -d
 
 down:
-	docker compose -f ./srcs/docker-compose.yml down
+	docker-compose -f ./srcs/docker-compose.yml down
 
 start:
-	docker compose -f ./srcs/docker-compose.yml start
+	docker-compose -f ./srcs/docker-compose.yml start
 
 stop:
-	docker compose -f ./srcs/docker-compose.yml stop
+	docker-compose -f ./srcs/docker-compose.yml stop
 
 restart:
-	docker compose -f ./srcs/docker-compose.yml restart
+	docker-compose -f ./srcs/docker-compose.yml restart
 
 logs:
-	docker compose -f ./srcs/docker-compose.yml logs
+	docker-compose -f ./srcs/docker-compose.yml logs
 
 clean: stop down cleanvolumes
 	@read -p "Are you sure you want to remove all images? (y/N): " confirm; \
@@ -63,7 +63,7 @@ volumes:
 	mkdir -p /home/ebinjama/data/www-data
 
 ps:
-	docker compose -f ./srcs/docker-compose.yml ps
+	docker-compose -f ./srcs/docker-compose.yml ps
 
 networks:
 	docker network ls
