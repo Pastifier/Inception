@@ -34,10 +34,10 @@ if [ -f /var/www/html/wordpress/wp-config.php ]; then
     echo "WordPress already configured."
 else
     cp /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
-    wp --allow-root core install --url="$DOMAIN_NAME" --title="$CORE_TITLE" --admin_user="$ADMIN_USER" --admin_password="$ADMIN_USER_PASS" --admin_email="$ADMIN_USER_EMAIL" --skip-email --path=/var/www/html/wordpress
+    wp --allow-root core install --url="$DOMAIN_NAME" --title="$CORE_TITLE" --admin_user="$ADMIN_USER" --admin_password="$ADMIN_USER_PASS" --admin_email="$ADMIN_USER_EMAIL" --path=/var/www/html/wordpress
 fi
 
-wp user create "$ADMIN_USER" "$ADMIN_USER_EMAIL" --role=administrator --user_pass="$ADMIN_USER_PASS" --skip-email
+wp user create "$ADMIN_USER" "$ADMIN_USER_EMAIL" --role=administrator --user_pass="$ADMIN_USER_PASS"
 
 wp --allow-root user create "$NORMAL_USER" "$NORMAL_USER_EMAIL" --role=subscriber --user_pass="$NORMAL_USER_PASS" --path=/var/www/html/wordpress
 
