@@ -12,10 +12,10 @@ if [ ! -f /var/www/html/wordpress/wp-config-sample.php ]; then
 fi
 
 # Set the Database Credentials
-sed -i 's|database_name_here|'${DATABASE_NAME}'|g' /var/www/html/wordpress/wp-config-sample.php
-sed -i 's|username_here|'${DATABASE_USER}'|g' /var/www/html/wordpress/wp-config-sample.php
-sed -i 's|password_here|'${DATABASE_PASS}'|g' /var/www/html/wordpress/wp-config-sample.php
-sed -i 's|localhost|'${DATABASE_HOST}'|g' /var/www/html/wordpress/wp-config-sample.php
+sed -i 's|DB_NAME_here|'${DB_NAME}'|g' /var/www/html/wordpress/wp-config-sample.php
+sed -i 's|username_here|'${DB_USER}'|g' /var/www/html/wordpress/wp-config-sample.php
+sed -i 's|password_here|'${DB_PASSWORD}'|g' /var/www/html/wordpress/wp-config-sample.php
+sed -i 's|localhost|'${DB_HOST}'|g' /var/www/html/wordpress/wp-config-sample.php
 
 chmod -R 755 /var/www/html/wordpress
 chown -R nobody:nobody /var/www/html/wordpress
